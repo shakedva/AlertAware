@@ -6,7 +6,8 @@ import cv2
 import dlib
 
 DEFAULT_BASE_DIR: str = 'resources'
-
+LABELED_CSV_NAME: str = 'eyes_labeled.csv'
+IMAGE_FORMAT: str = "*.png"
 
 # Load the pre-trained face and facial detection models
 detector = dlib.get_frontal_face_detector()
@@ -27,8 +28,7 @@ def detect_and_draw(image_path):
         # Draw a rectangle around the face
         cv2.rectangle(image, (face.left(), face.top()), (face.right(), face.bottom()), (255, 0, 0), 2)
 
-        # Draw circles on the eyes
-        for n in range(36, 48):  # Range corresponding to eye landmarks
+        for n in range(36, 48):
             x, y = landmarks.part(n).x, landmarks.part(n).y
             cv2.circle(image, (x, y), 2, (0, 255, 0), -1)
 
@@ -46,8 +46,7 @@ def main(argv=None):
 
     directory_path: Path = Path(args.dir or DEFAULT_BASE_DIR)
     if directory_path.exists():
-        # gets a list of all the files in the directory that ends with "_leftImg8bit.png".
-        file_list: List[Path] = list(directory_path.rglob('*.png'))
+        file_list: List[Path] = list(directory_path.rglob(IMAGE_FORMAT))
 
         for image in file_list:
             # Convert the Path object to a string using as_posix() method

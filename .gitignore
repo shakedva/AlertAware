@@ -1,0 +1,9 @@
+.idea/
+cmake-build-debug/
+resources/
+train/
+shape_predictor_68_face_landmarks.dat
+.vscode/
+eyes_labeled.csv
+.venv/
+bestModel.h5
