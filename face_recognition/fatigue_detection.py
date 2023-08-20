@@ -66,7 +66,7 @@ callback = tf.keras.callbacks.ModelCheckpoint(
     mode='min',
     save_best_only=True,
     verbose=1)
-model.fit(x_train, y_train, validation_split=0.2, epochs=30, batch_size=32, callbacks=callback)
+model.fit(x_train, y_train, validation_split=0.2, epochs=15, batch_size=32, callbacks=callback)
 
 model.evaluate(x_test, y_test)
 best_model = load_model('bestModel.h5')
