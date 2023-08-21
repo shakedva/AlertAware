@@ -1,4 +1,5 @@
 import argparse
+import os
 from pathlib import Path
 from typing import List
 
@@ -19,6 +20,22 @@ class DataProcessor:
         self.image_format = IMAGE_FORMAT
         self.base_dir = DEFAULT_BASE_DIR
 
+    def process_data(self, directory_path):
+        directory_path = Path(directory_path)
+        if directory_path.exists():
+            file_list: List[Path] = list(directory_path.rglob(IMAGE_FORMAT))
+
+            for i, image in enumerate(file_list):
+                image_path: str = image.as_posix()
+                self.detect_and_crop_eyes(image_path, i)
+                self.delete_original_image(image_path)
+
+    def delete_original_image(self, image_path):
+        try:
+            os.remove(image_path)
+            print(f"Deleted original image: {image_path}")
+        except Exception as e:
+            print(f"Failed to delete original image: {image_path}\nError: {e}")
 
     def detect_and_crop_eyes(self, image_path, image_index):
         image = cv2.imread(image_path)
@@ -61,12 +78,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     directory_path: Path = Path(args.dir or DEFAULT_BASE_DIR)
     data_processor = DataProcessor()
-    if directory_path.exists():
-        file_list: List[Path] = list(directory_path.rglob(IMAGE_FORMAT))
-
-        for i, image in enumerate(file_list):
-            image_path: str = image.as_posix()
-            data_processor.detect_and_crop_eyes(image_path, i)
+    data_processor.process_data(directory_path)
 
 
 if __name__ == "__main__":
