@@ -17,13 +17,17 @@ keyboard.on_press_key("esc", stop_capture)
 
 try:
     while True:
-        # Capture a photo
-        filename = time.strftime("photo_%Y%m%d%H%M%S.jpg")
-        camera.capture(filename)
-        print(f"Captured {filename}")
+        start_time = time.time()
 
-        # Wait for a brief moment before taking the next photo
-        time.sleep(1)
+        for i in range(3):
+            # Capture a photo
+            filename = time.strftime("photo_%Y%m%d%H%M%S.jpg")
+            camera.capture(filename)
+            print(f"Captured {filename}")
+
+        elapsed_time = time.time() - start_time
+        if elapsed_time < 1:
+            time.sleep(1 - elapsed_time)
 
 except KeyboardInterrupt:
     print("Program stopped by user.")
