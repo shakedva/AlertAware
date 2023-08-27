@@ -1,5 +1,3 @@
-import asyncio
-
 from camera import ContinuousPhotoCapture
 from eyes_recognition import DataProcessor
 from run_model_on_crops import EyeClassifier

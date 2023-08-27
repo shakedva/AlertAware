@@ -22,6 +22,7 @@ class EyeClassifier:
         return img
 
     def load_images(self):
+        self.crop_images = []
         for filename in os.listdir(self.CROPS_PATH):
             if filename.endswith(".jpg"):
                 print(filename)

@@ -29,7 +29,7 @@ class DataProcessor:
             for i, image in enumerate(file_list):
                 image_path: str = image.as_posix()
                 self.detect_and_crop_eyes(image_path, i)
-                # self.delete_original_image(image_path)
+                self.delete_original_image(image_path)
 
     def delete_original_image(self, image_path):
         try:
