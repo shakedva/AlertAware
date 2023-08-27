@@ -3,6 +3,7 @@ from eyes_recognition import DataProcessor
 from run_model_on_crops import EyeClassifier
 import time
 from pathlib import Path
+import keyboard
 
 DEFAULT_BASE_DIR: str = 'resources'
 
@@ -15,7 +16,8 @@ class Controller:
 
     def run(self):
         count_sec = 0
-        while count_sec < 10:
+        running = True  # Flag to control the loop
+        while running:
             count_sec += 1
             self.camera.capture_photos(photos_to_capture=3)
             # Process the captured images using the data processor

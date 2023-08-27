@@ -25,7 +25,6 @@ class EyeClassifier:
         self.crop_images = []
         for filename in os.listdir(self.CROPS_PATH):
             if filename.endswith(".jpg"):
-                print(filename)
                 image_path = os.path.join(self.CROPS_PATH, filename)
                 img = Image.open(image_path)
                 img = self.preprocess_image(img)
@@ -34,12 +33,11 @@ class EyeClassifier:
         # Convert the list to a numpy array after loading all images
         self.crop_images = np.array(self.crop_images)
 
-
     def classify_images(self):
         open_count = 0
         close_count = 0
         for img in self.crop_images:
-            result = self.best_model.predict(np.expand_dims(img, 0))
+            result = self.best_model.predict(np.expand_dims(img, 0), verbose=0)
             plt.imshow(img.squeeze(), cmap='gray')
             plt.axis('off')
             plt.show()
@@ -49,7 +47,7 @@ class EyeClassifier:
                 plt.text(5, 5, self.OPEN_LABEL, color='green', fontsize=12, bbox=dict(facecolor='white', alpha=0.8))
             else:
                 close_count += 1
-                plt.text(5, 5,  self.CLOSED_LABEL, color='red', fontsize=12, bbox=dict(facecolor='white', alpha=0.8))
+                plt.text(5, 5, self.CLOSED_LABEL, color='red', fontsize=12, bbox=dict(facecolor='white', alpha=0.8))
 
         return open_count, close_count
 
@@ -64,8 +62,6 @@ class EyeClassifier:
 
         print(f"{self.OPEN_LABEL}: {open_count}")
         print(f"{self.CLOSED_LABEL}: {close_count}")
-
-
 
 
 if __name__ == "__main__":

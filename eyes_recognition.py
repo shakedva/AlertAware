@@ -21,7 +21,6 @@ class DataProcessor:
         self.base_dir = DEFAULT_BASE_DIR
 
     def process_data(self, directory_path):
-        print("process_data")
         directory_path = Path(directory_path)
         if directory_path.exists():
             file_list: List[Path] = list(directory_path.rglob(IMAGE_FORMAT))
@@ -34,7 +33,6 @@ class DataProcessor:
     def delete_original_image(self, image_path):
         try:
             os.remove(image_path)
-            # print(f"Deleted original image: {image_path}")
         except Exception as e:
             print(f"Failed to delete original image: {image_path}\nError: {e}")
 
