@@ -24,27 +24,31 @@ class EyeClassifier:
     def load_images(self):
         for filename in os.listdir(self.CROPS_PATH):
             if filename.endswith(".jpg"):
+                print(filename)
                 image_path = os.path.join(self.CROPS_PATH, filename)
                 img = Image.open(image_path)
                 img = self.preprocess_image(img)
-                self.crop_images.append(img)
+                self.crop_images.append(img)  # Append images to the list
+
+        # Convert the list to a numpy array after loading all images
         self.crop_images = np.array(self.crop_images)
+
 
     def classify_images(self):
         open_count = 0
         close_count = 0
         for img in self.crop_images:
             result = self.best_model.predict(np.expand_dims(img, 0))
-            # plt.imshow(img.squeeze(), cmap='gray')
-            # plt.axis('off')
-            # plt.show()
+            plt.imshow(img.squeeze(), cmap='gray')
+            plt.axis('off')
+            plt.show()
 
             if result > 0.5:
                 open_count += 1
-                # plt.text(5, 5, self.OPEN_LABEL, color='green', fontsize=12, bbox=dict(facecolor='white', alpha=0.8))
+                plt.text(5, 5, self.OPEN_LABEL, color='green', fontsize=12, bbox=dict(facecolor='white', alpha=0.8))
             else:
                 close_count += 1
-                # plt.text(5, 5, self.CLOSED_LABEL, color='red', fontsize=12, bbox=dict(facecolor='white', alpha=0.8))
+                plt.text(5, 5,  self.CLOSED_LABEL, color='red', fontsize=12, bbox=dict(facecolor='white', alpha=0.8))
 
         return open_count, close_count
 
@@ -52,13 +56,15 @@ class EyeClassifier:
         self.load_images()
         open_count, close_count = self.classify_images()
         count = open_count + close_count
-        close_percentage = (close_count / count) * 100
+        if count:
+            open_percentage = (open_count / count) * 100
+            if open_percentage <= 60:
+                print("Person is asleep. Turn on alert.")
 
-        # print(f"{self.OPEN_LABEL}: {open_count}")
-        # print(f"{self.CLOSED_LABEL}: {close_count}")
+        print(f"{self.OPEN_LABEL}: {open_count}")
+        print(f"{self.CLOSED_LABEL}: {close_count}")
 
-        if close_percentage >= 60:
-            print("Person is asleep. Turn on alert.")
+
 
 
 if __name__ == "__main__":

@@ -1,6 +1,8 @@
-import ContinuousPhotoCapture
-import DataProcessor
-import EyeClassifier
+import asyncio
+
+from camera import ContinuousPhotoCapture
+from eyes_recognition import DataProcessor
+from run_model_on_crops import EyeClassifier
 import time
 from pathlib import Path
 
@@ -14,17 +16,18 @@ class Controller:
         self.detector = EyeClassifier()
 
     def run(self):
-        while True:
-            # Capture photos using the camera
-            self.camera.capture_photos()
-
-            # Wait for a second before processing the images
-            time.sleep(1)
-
+        count_sec = 0
+        while count_sec < 10:
+            count_sec += 1
+            self.camera.capture_photos(photos_to_capture=3)
             # Process the captured images using the data processor
             directory_path: Path = Path(DEFAULT_BASE_DIR)
             self.data_processor.process_data(directory_path)
             self.detector.run()
 
             # Wait for a second before the next iteration
-            time.sleep(1)
+            time.sleep(2)
+
+
+controller = Controller()
+controller.run()
