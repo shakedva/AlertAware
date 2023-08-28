@@ -1,8 +1,15 @@
+import requests
 from keras.models import load_model
 import os
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
+
+ALERT_MSG = "Fatigue Alert!\nOur fatigue detection system has detected signs of employee fatigue. It's crucial to take immediate action to ensure the safety of the employee and those around them.\n" \
+            "- Employee: [Employee's Name]\n" \
+            "- Timestamp: [Date and Time]\nPlease check on the employee, provide them with a break if needed, and consider reassigning tasks that require high alertness. Remember that employee safety is our top priority.\n" \
+            "Best regards,\nAlertAware"
+URL = ''
 
 
 class EyeClassifier:
@@ -58,6 +65,11 @@ class EyeClassifier:
         if count:
             open_percentage = (open_count / count) * 100
             if open_percentage <= 60:
+                # TODO HTTP POST REQUEST
+                response = requests.post(
+                    URL,
+                    data={'text': ALERT_MSG}
+                )
                 print("Person is asleep. Turn on alert.")
 
         print(f"{self.OPEN_LABEL}: {open_count}")
