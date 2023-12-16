@@ -9,6 +9,7 @@ from datetime import datetime
 
 DEFAULT_BASE_DIR: str = 'resources'
 LABELED_CSV_NAME: str = 'eyes_labeled.csv'
+# IMAGE_FORMAT: str = "*.png"
 IMAGE_FORMAT: str = "*.jpg"
 CROPS_PATH = DEFAULT_BASE_DIR + "/crops"
 
@@ -23,12 +24,12 @@ class DataProcessor:
     def process_data(self, directory_path):
         directory_path = Path(directory_path)
         if directory_path.exists():
-            file_list: List[Path] = list(directory_path.rglob(IMAGE_FORMAT))
 
+            file_list: List[Path] = list(directory_path.rglob(IMAGE_FORMAT))
             for i, image in enumerate(file_list):
                 image_path: str = image.as_posix()
                 self.detect_and_crop_eyes(image_path, i)
-                self.delete_original_image(image_path)
+                # self.delete_original_image(image_path) TODO
 
     def delete_original_image(self, image_path):
         try:

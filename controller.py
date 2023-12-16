@@ -14,7 +14,7 @@ ALERT_MSG_TEMPLATE = "Fatigue Alert!\nOur fatigue detection system has detected 
                      "- Timestamp: {}\nPlease check on the employee, provide them with a break if needed, and consider reassigning tasks that require high alertness. Remember that employee safety is our top priority.\n" \
                      "Best regards,\nAlertAware"
 
-URL = ''
+URL = 'https://e1cf-82-80-173-170.ngrok-free.app/message'
 DEFAULT_BASE_DIR: str = 'resources'
 
 

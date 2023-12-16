@@ -1,9 +1,11 @@
 from flask import Flask, Response, request
 import requests
 
-TOKEN = ''
-NGROK_URL = ''
-CHAT_ID = ''
+
+TOKEN = '6358416870:AAE3P5xB65cEzWDdAUs2xXqWfNr6Mhz0ckg'
+NGROK_URL = 'https://e1cf-82-80-173-170.ngrok-free.app'
+CHAT_ID = '5617966555'
+
 TELEGRAM_INIT_WEBHOOK_URL = 'https://api.telegram.org/bot{}/setWebhook?url={}/message'.format(TOKEN, NGROK_URL)
 
 # Create a Flask app
